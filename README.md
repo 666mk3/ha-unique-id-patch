@@ -3,9 +3,7 @@
 This Home Assistant Addon allows you to manually modify the `Unique ID` of Config Entries in `core.config_entries`.
 It is primarily designed to resolve **"Already configured"** errors when adding multiple ONVIF cameras that share the same MAC address due to firmware bugs.
 
-![Screenshot](https://placeholder.com/screenshot.png)
-
-## Why do I need this?
+## Specific Issues and Solutions
 
 Some IP cameras (ONVIF) report a fixed/duplicate MAC address (e.g., `00:30:1b:ba:02:db`) via the ONVIF protocol, even if their physical NIC has a unique MAC.
 Home Assistant's ONVIF integration uses this reported MAC as the Unique ID.
