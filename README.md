@@ -49,6 +49,10 @@ This button syncs the Unique ID with the MAC address detected by Home Assistant.
 
 ## Disclaimer
 
-This addon directly modifies Home Assistant's internal storage files (`.storage/core.config_entries`).
-**ALWAYS BACKUP YOUR CONFIGURATION BEFORE USE.**
-The author is not responsible for any data corruption.
+This addon directly modifies Home Assistant's internal storage files (`/config/.storage/core.config_entries`).
+**Modifying core configuration files is high-risk and can lead to file corruption or Home Assistant failing to start.**
+
+While we take safety seriously by **automatically creating a timestamped backup** (e.g., `core.config_entries.bak_YYYYMMDD_HHMMSS`) in the same `.storage` directory before every write, this is not a substitute for a full system backup.
+
+**ALWAYS PERFORM A FULL HOME ASSISTANT BACKUP BEFORE USE.**
+The author is not responsible for any data corruption or system failure.
