@@ -36,7 +36,7 @@ This addon lets you **rename Device A's ID** (e.g., to `...db-1`), freeing up th
 This button syncs the Unique ID with the MAC address detected by Home Assistant.
 **Use with caution depending on the situation:**
 
-*   **✅ RECOMMENDED**: If the MAC address for clinical camera (ONVIF) is **displayed correctly (e.g., MAC: `xx:xx:xx:xx:xx:xx`)** in the Home Assistant device information screen.
+*   **✅ RECOMMENDED**: If the MAC address for the target camera (ONVIF) is **displayed correctly (e.g., MAC: `xx:xx:xx:xx:xx:xx`)** in the Home Assistant device information screen.
     *   Clicking this button is recommended as it allows you to correct the ID to the proper MAC address.
 *   **❌ FORBIDDEN**: If the target camera displays **the same MAC address as other cameras (e.g., MAC: `00:30:1b:ba:02:db`)**.
     *   **DO NOT USE THIS BUTTON.** The IDs will conflict again, resulting in an error. Obtain the correct MAC address by some other means and perform a manual edit.
