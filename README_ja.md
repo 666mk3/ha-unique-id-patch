@@ -1,4 +1,4 @@
-# HA Unique ID Patch Addon (日本語)
+# HA Unique ID Patch Addon
 
 このアドオンは、Home Assistantの `core.config_entries` に保存されている `Unique ID` を手動で書き換えるためのツールです。
 主に、**ONVIFカメラなどでMACアドレスが重複してしまい、「既に設定されています」となって登録できない問題**を解決するために作成されました。
