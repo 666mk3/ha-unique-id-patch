@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新完了</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #03a9f4;
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #e0e0e0;
+            --accent: #ff9800;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #555;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>{{ texts.result_title }}</h1>
+        <p>
+            {{ changes_msg }}<br>
+            {{ texts.result_note }}
+        </p>
+        <div>
+            <!-- Restart button removed for security -->
+            <a href="./?lang={{ current_lang }}" class="btn btn-secondary">{{ texts.back_home }}</a>
+        </div>
+    </div>
+</body>
+
+</html>

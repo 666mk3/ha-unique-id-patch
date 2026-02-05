@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HA Unique ID Patch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #03a9f4;
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #e0e0e0;
+            --accent: #ff9800;
+            --error: #f44336;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), #00bcd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .alert {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .entry-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .domain-badge {
+            background: rgba(3, 169, 244, 0.2);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .entry-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .id-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .current-id {
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        input[type="text"] {
+            background: #404040;
+            border: 1px solid #555;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            flex-grow: 1;
+            min-width: 250px;
+            font-family: monospace;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #444;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: filter 0.2s;
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-warning {
+            background: var(--accent);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .id-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{ texts.title }}</h1>
+
+        <div class="alert">
+            {{ texts.alert }}
+        </div>
+
+        <form action="update_bulk" method="POST">
+            <input type="hidden" name="lang" value="{{ current_lang }}">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100;">
+                <div style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 6px;">
+                    <a href="?lang=en"
+                        style="color: {{ 'var(--primary)' if current_lang == 'en' else '#888' }}; text-decoration: none; font-weight: bold;">EN</a>
+                    <span style="color: #666">|</span>
+                    <a href="?lang=ja"
+                        style="color: {{ 'var(--primary)' if current_lang == 'ja' else '#888' }}; text-decoration: none; font-weight: bold;">JA</a>
+                </div>
+                <button type="submit" class="btn btn-warning"
+                    style="font-size: 1.1rem; padding: 10px 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    {{ texts.bulk_top }}
+                </button>
+            </div>
+
+            {% for entry in entries %}
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-title">{{ entry.title or entry.domain }}</span>
+                    <span class="domain-badge">{{ entry.domain }}</span>
+                </div>
+
+                <div class="id-row">
+                    <div class="current-id">{{ texts.current_id }}: {{ entry.unique_id or "None" }}</div>
+                    <input type="text" name="new_id_{{ entry.entry_id }}" value="{{ entry.unique_id or '' }}"
+                        placeholder="{{ texts.placeholder }}">
+
+                    {% if entry.domain == 'onvif' and entry.detected_mac %}
+                    <div style="display: flex; flex-direction: column; gap: 5px; margin-left: 10px;">
+                        <label
+                            style="font-size: 0.9rem; display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(255, 152, 0, 0.1); padding: 5px 10px; border-radius: 4px;">
+                            <input type="checkbox" name="sync_mac_ids" value="{{ entry.entry_id }}">
+                            <strong>{{ texts.sync_mac }}</strong> <span style="font-size: 0.8em; opacity: 0.8">({{
+                                entry.detected_mac }})</span>
+                        </label>
+                        <label
+                            style="font-size: 0.8rem; display: flex; align-items: center; gap: 4px; cursor: pointer; padding-left: 5px;">
+                            <input type="checkbox" name="update_title_ids" value="{{ entry.entry_id }}"> {{
+                            texts.update_title }}
+                        </label>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" class="btn btn-warning" style="font-size: 1.2rem; padding: 12px 40px;">
+                    {{ texts.bulk_bottom }}
+                </button>
+            </div>
+        </form>
+
+        <div class="footer">
+            &copy; 2026 HA Unique ID Patch Addon - Created for Advanced Device Configuration
+        </div>
+    </div>
+</body>
+
+</html>
