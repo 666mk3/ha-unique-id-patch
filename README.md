@@ -12,6 +12,10 @@ Home Assistant's ONVIF integration uses this reported MAC as the Unique ID.
 
 This addon lets you **rename Device A's ID** (e.g., to `...db-1`), freeing up the original Unique ID space so Device B can be registered.
 *Note: Due to Home Assistant's specifications, if Unique IDs conflict, they are registered as the same device.*
+<img width="1049" height="918" alt="image" src="https://github.com/user-attachments/assets/6a99ca67-c62c-46d9-9f5d-aed4643bb80c" />
+<img width="1013" height="798" alt="image" src="https://github.com/user-attachments/assets/51844da5-fd02-4174-a144-b8f2cb6917bf" />
+
+
 
 ## Features
 
