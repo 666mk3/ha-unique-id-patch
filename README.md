@@ -43,6 +43,11 @@ This button syncs the Unique ID with the MAC address detected by Home Assistant.
 *   **❌ FORBIDDEN**: If the target camera displays **the same MAC address as other cameras (e.g., MAC: `00:30:1b:ba:02:db`)**.
     *   **DO NOT USE THIS BUTTON.** The IDs will conflict again, resulting in an error. Obtain the correct MAC address by some other means and perform a manual edit.
 
+### About Actual Behavior
+
+This addon operates by stopping the Home Assistant Core in the background (changes are not reflected unless stopped), directly modifying the configuration files, and then restarting the Core.
+Therefore, the changes are persistent and will not revert even after restarting Home Assistant.
+
 ## Installation
 
 1.  Copy this repository to your local add-ons folder or add it as a repository in the Add-on Store.
