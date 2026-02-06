@@ -15,6 +15,9 @@ Home AssistantのONVIFインテグレーションはこの値をUnique IDとし�
 これによりUnique IDの場所が空くため、2台目を登録できるようになります。
 ※HAの仕様上Unique IDがかぶると同一デバイスとして登録されてしまう。
 
+<img width="1049" height="918" alt="image" src="https://github.com/user-attachments/assets/6a99ca67-c62c-46d9-9f5d-aed4643bb80c" />
+<img width="1013" height="798" alt="image" src="https://github.com/user-attachments/assets/51844da5-fd02-4174-a144-b8f2cb6917bf" />
+
 ## 機能
 
 - **一覧表示**: 登録されているConfig Entryの一覧とIDを表示します。
